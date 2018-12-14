@@ -22,27 +22,28 @@ module.exports = {
 
     return deck;
   },
-  cardValue: {
-    'A': 1,
-    '2': 2,
-    '3': 3,
-    '4': 4,
-    '5': 5,
-    '6': 6,
-    '7': 7,
-    '8': 8,
-    '9': 9,
-    '10': 10,
-    'J': 10,
-    'Q': 10,
-    'K': 10
-  },
   getHandTotal: (cards) => {
+    const cardValues = {
+      'A': 1,
+      '2': 2,
+      '3': 3,
+      '4': 4,
+      '5': 5,
+      '6': 6,
+      '7': 7,
+      '8': 8,
+      '9': 9,
+      '10': 10,
+      'J': 10,
+      'Q': 10,
+      'K': 10
+    };
+
     let total = 0;
     let cardNums = cards.map(card => card.slice(0, card.indexOf(' ')));
 
     for (let i = 0; i < cardNums.length; i++) {
-      total += this.cardValues[cardNums[i]];
+      total += cardValues[cardNums[i]];
     }
   
     if (!cardNums.includes('A')) {
@@ -50,6 +51,9 @@ module.exports = {
     } else {
       return [total, total + 10];
     }
+  },
+  hasBlackjack: (cards) => {
+    return this.getHandTotal(cards).includes(21);
   }
 };
 

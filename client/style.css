@@ -1,15 +1,15 @@
 body, html {
 	font-size: 18px;
 	font-family: sans-serif;
-  margin: 10px;
+  margin: 5px;
   background-size: 100%;
   /* background-size: cover; */
 }
 
 h1 {
   font-size: 35px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  /* margin-top: 5px;
+  margin-bottom: 5px; */
 }
 
 h2 {
@@ -53,11 +53,11 @@ button[disabled], input[disabled] {
 }
 
 #player, #dealer {
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-#bankroll, #bet {
+/* #bankroll, #bet {
   font-size: 20px;
   margin-bottom: 10px;
-}
+} */

@@ -1,6 +1,7 @@
 const React = require('react');
 const Login = require('./Login.js');
 const Game = require('./game.js');
+const gameLogic = require('../lib/gameLogic.js');
 
 class App extends React.Component {
   constructor(props) {
@@ -8,24 +9,30 @@ class App extends React.Component {
     this.state = {
       currentPage: 'Login',
       currentUser: null,
-      currentBankroll: null
+      currentBankroll: null,
+      resultText:'test!'
     };
   }
 
   renderCurrentPage = () => {
     switch (this.state.currentPage) {
       case 'Login':
-        return (<Login currentUser={this.state.currentUser} updateState={this.updateState} />);
+        return (<Login currentUser={this.state.currentUser} updateAppState={this.updateAppState} />);
         break;
       case 'Game':
-        return (<Game currentUser={this.state.currentUser} currentBankroll={this.state.currentBankroll} gameLogic = {this.props.gameLogic} />);
+        return (<Game 
+          currentUser={this.state.currentUser}
+          currentBankroll={this.state.currentBankroll}
+          updateAppState={this.updateAppState}
+          gameLogic={gameLogic} 
+          />);
         break;
       default:
         break;
     }
   }
 
-  updateState = (obj) => {
+  updateAppState = (obj) => {
     this.setState(obj);
   }
 

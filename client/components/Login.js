@@ -23,7 +23,7 @@ class Login extends React.Component {
         if (data === 'Username does not exist.' || data === 'Incorrect password') {
           alert(data);
         } else if (typeof data === 'number') {
-          this.props.updateState({ currentUser: username, currentBankroll: data });
+          this.props.updateAppState({ currentUser: username, currentBankroll: data });
           this.setState({ loggedIn: true, loginmessage: `Welcome, ${this.props.currentUser}` });
         } else {
           console.error('Login error');
@@ -49,7 +49,7 @@ class Login extends React.Component {
   };
 
   startGame = () => {
-    this.props.updateState({ currentPage: 'Game' });
+    this.props.updateAppState({ currentPage: 'Game' });
   }
 
   render = () => (
