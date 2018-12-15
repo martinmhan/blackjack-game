@@ -19,13 +19,18 @@ class App extends React.Component {
 
   renderCurrentPage = () => {
     if (this.state.currentPage === 'Login') {
-      return (<Login currentUser={this.state.currentUser} updateAppState={this.updateAppState} />);
+      return (
+        <Login
+          currentUser={this.state.currentUser}
+          updateAppState={this.updateAppState}
+        />);
     } else if (this.state.currentPage === 'Game') {
-      return (<Game
-        currentUser={this.state.currentUser}
-        currentBankroll={this.state.currentBankroll}
-        updateAppState={this.updateAppState}
-        gameLogic={gameLogic} 
+      return (
+        <Game
+          currentUser={this.state.currentUser}
+          currentBankroll={this.state.currentBankroll}
+          updateAppState={this.updateAppState}
+          gameLogic={gameLogic} 
         />);
     }
   }

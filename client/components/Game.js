@@ -78,13 +78,10 @@ class Game extends React.Component {
     <div>
       <Dealer
         cards={this.state.dealerCards}
-        gameLogic={this.props.gameLogic}
-        updateGameState={this.updateGameState}
       />
       <Player
         cards={this.state.playerCards}
-        deck={this.state.deck}
-        gameStatus={this.state.gameStatus}
+        currentBankroll={this.props.currentBankroll}
       />
       <ControlPad
         resultText={this.props.resultText}

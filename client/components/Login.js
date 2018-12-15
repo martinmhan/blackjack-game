@@ -35,10 +35,12 @@ class Login extends React.Component {
     event.preventDefault();
     let username = document.getElementById('usernamenew').value;
     let password = document.getElementById('passwordnew').value;
-    if (username === '') { alert('Please enter a valid username.') }
-    else if (password === '') { alert('Please enter a password') }
-
-    axios.post('/api/login/new', { username, password })
+    if (username === '') {
+      alert('Please enter a valid username.');
+    } else if (password === '') {
+      alert('Please enter a password');
+    } else {
+      axios.post('/api/login/new', { username, password })
       .then(({data}) => {
         if (data === 'Username already exists. Please select a different one.') {
           alert(data);
@@ -46,6 +48,7 @@ class Login extends React.Component {
           this.setState({ loggedIn: true, loginmessage: `New user account has been created for ${username}`});
         }
       });
+    }
   };
 
   startGame = () => {
@@ -71,7 +74,7 @@ class Login extends React.Component {
       <br></br><br></br>
       <div id="loginmessage">{this.state.loginmessage}</div>
       <br></br>
-      <button disabled={!this.state.loggedIn} id="startgamebtn" onClick={this.startGame}>Start Game</button>
+      <button disabled={!this.state.loggedIn} onClick={this.startGame}>Start Game</button>
     </div>
   );
 }

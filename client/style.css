@@ -2,6 +2,7 @@ body, html {
 	font-size: 18px;
 	font-family: sans-serif;
   background-size: 100%;
+  margin: 5px;
 }
 
 h1 {
@@ -19,7 +20,7 @@ button, input {
   border-radius: 8px;
   border-color: black;
   color: black;
-  margin: 0px 5px 0px 5px;
+  margin: 5px;
 }
 
 button[disabled], input[disabled] {
@@ -27,29 +28,22 @@ button[disabled], input[disabled] {
   color: gray;
 }
 
+form {
+  margin: 15px;
+}
+
 .controlpad {
   position: fixed;
-  bottom: 10px;
+  bottom: 25px;
   width: 100%;
   color: black;
   text-align: left;
+  margin-left: 15px;
 }
 
 .card {
-  /* display: none; */
   font-size: 15px;
-  margin-left: 20px;
+  margin-left: 15px;
   margin-top: 5px;
   margin-bottom: 5px;
-}
-
-#result {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-#player, #dealer {
-  margin-top: 15px;
-  margin-bottom: 15px;
 }
