@@ -20,6 +20,10 @@ class Game extends React.Component {
     this.setState(obj);
   }
 
+  hasBlackjack = (cards) => (
+    this.props.gameLogic.getHandTotal(cards).includes(21)
+  );
+
   dealInitialCards = () => {
     let deck = this.props.gameLogic.getNewDeck();
     let playerCards = [];
@@ -29,19 +33,25 @@ class Game extends React.Component {
     dealerCards.push(deck.pop());
     playerCards.push(deck.pop());
     dealerCards.push(deck.pop());
-    this.setState({ playerCards, dealerCards, deck }, handleBlackjack);
+    this.setState({ playerCards, dealerCards, deck }, this.handleBlackjack);
   }
 
-  dealCardToDealer = () => {
+  handleDealerTurn = () => {
     let dealerCards = [...this.state.dealerCards];
     let deck = [...this.state.deck];
-    dealerCards.push(deck.pop());
-    this.setState({ dealerCards, deck });
+    let dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
+    while (Math.min(dealerHandTotal) <= 17) {
+      dealerCards.push(deck.pop());
+    }
+    this.setState({ dealerCards, deck }, () => {
+      // TODO
+    });
   }
 
   handleBlackjack = () => {
-    if (this.props.gameLogic.hasBlackjack(this.state.playerCards) || this.props.gameLogic.hasBlackjack(this.state.dealerCards)) {
+    if (this.hasBlackjack(this.state.playerCards) || this.hasBlackjack(this.state.dealerCards)) {
       console.log('blackjack!');
+      // TODO
     }
   }
 
@@ -54,7 +64,8 @@ class Game extends React.Component {
   };
 
   handlePlayerBust = () => {
-    if (Math.min(this.state.handTotal) > 21) {
+    const playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
+    if (Math.min(playerHandTotal) > 21) {
       this.props.updateAppState({
         resultText: 'Player busted!',
         currentBankroll: this.props.currentBankroll - this.state.betAmount
@@ -64,6 +75,7 @@ class Game extends React.Component {
 
   handlePlayerStay = () => {
     console.log('Player stays!');
+    // TO DO
   }
 
   handleQuitGame = () => {
@@ -72,7 +84,17 @@ class Game extends React.Component {
 
   handleResetBankroll = () => {
     this.props.updateAppState({ currentBankroll: 1000 });
+    // TODO?
   }
+
+  handleBetSubmit = () => {
+    let betAmount = document.getElementById('betamount').value;
+    if (betAmount <= 0) {
+      alert('Please enter a valid bet amount.');
+    } else {
+      this.setState({ betAmount , gameStatus: 'bet submitted' });
+    }
+  };
 
   render = () => (
     <div>
@@ -85,17 +107,11 @@ class Game extends React.Component {
       />
       <ControlPad
         resultText={this.props.resultText}
-        currentUser={this.props.currentUser}
-        updateAppState={this.props.updateAppState}
-        currentBankroll={this.props.currentBankroll}
-        deck={this.state.deck}
-        gameStatus={this.state.gameStatus}
-        playerCards={this.state.playerCards}
-        updateGameState={this.updateGameState}
         dealInitialCards={this.dealInitialCards}
         handleResetBankroll={this.handleResetBankroll}
         handleQuitGame={this.handleQuitGame}
         handlePlayerStay={this.handlePlayerStay}
+        handleBetSubmit={this.handleBetSubmit}
       />
     </div>
   );

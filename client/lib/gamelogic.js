@@ -50,8 +50,5 @@ module.exports = {
     } else {
       return [total, total + 10];
     }
-  },
-  hasBlackjack: (cards) => {
-    return this.getHandTotal(cards).includes(21);
   }
 };

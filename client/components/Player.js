@@ -4,8 +4,6 @@ const Card = require('./Card.js');
 const Player = (props) => (
   <div className="player">
     <h2 className="header">Player: {'$' + props.currentBankroll}</h2>
-    {/* Bankroll: {'$' + props.currentBankroll} */}
-
     <div id="playercards">
       {props.cards.map((card, i) => (<Card card={card} key={i} />))}
     </div>
