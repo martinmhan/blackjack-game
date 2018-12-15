@@ -13,7 +13,7 @@ class App extends React.Component {
     };
   }
 
-  updateAppState = (obj) => {
+  setAppState = (obj) => {
     this.setState(obj);
   }
 
@@ -22,14 +22,14 @@ class App extends React.Component {
       return (
         <Login
           currentUser={this.state.currentUser}
-          updateAppState={this.updateAppState}
+          setAppState={this.setAppState}
         />);
     } else if (this.state.currentPage === 'Game') {
       return (
         <Game
           currentUser={this.state.currentUser}
           currentBankroll={this.state.currentBankroll}
-          updateAppState={this.updateAppState}
+          setAppState={this.setAppState}
           gameLogic={gameLogic} 
         />);
     }

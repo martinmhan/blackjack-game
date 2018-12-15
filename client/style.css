@@ -47,3 +47,16 @@ form {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+#playercomponent {
+  position: fixed;
+  top: 40%;
+}
+
+#betsubmitform {
+  margin: 5px;
+}
+
+#betamount {
+  width: 200px;
+}

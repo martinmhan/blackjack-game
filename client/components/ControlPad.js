@@ -11,17 +11,18 @@ class ControlPad extends React.Component {
 
   render = () => (
   <div className="controlpad">
+    Game Status: {this.props.gameStatus}<br></br>
+    Bet Amount: {this.props.betAmount}
     <div id="results">{this.props.resultText}</div>
-    <br></br><br></br>
-    Bet Amount:
-    <input type="number" id="betamount" ></input>
-    <input type="submit" id="betsubmit" disabled={!(this.props.gameStatus==='inputting bet')} onClick={this.props.handleBetSubmit}></input>
+    <form id="betsubmitform" onSubmit={this.props.handleBetSubmit}>
+      Bet Amount:
+      <input type="number" id="betamount" min="1" max={this.props.currentBankroll} disabled={!(this.props.gameStatus==='inputting bet')}></input>
+      <input type="submit" id="betsubmit" disabled={!(this.props.gameStatus==='inputting bet')}></input>
+    </form>
 
-    <br></br><br></br>
-
-    <button id="deal" disabled={!(this.props.gameStatus==='bet submitted')} onClick={this.props.dealInitialCards}>Deal</button>
-    <button id="hit" disabled={!(this.props.gameStatus==='in play')} onClick={this.playerHit}>Hit</button>
-    <button id="stay" disabled={!(this.props.gameStatus==='in play')} onClick={this.playerStay}>Stay</button>
+    <button id="deal" disabled={!(this.props.gameStatus==='bet submitted')} onClick={this.props.handleDeal}>Deal</button>
+    <button id="hit" disabled={!(this.props.gameStatus==='in play')} onClick={this.props.handlePlayerHit}>Hit</button>
+    <button id="stay" disabled={!(this.props.gameStatus==='in play')} onClick={this.props.handlePlayerStay}>Stay</button>
     <button id="quitgame" onClick={ this.props.handleQuitGame }>Quit Game</button>
     <button id="reset" disabled={!(this.props.currentBankroll === 0)} onClick={this.props.handleResetBankroll}>Reset Bankroll</button>
     <br></br>

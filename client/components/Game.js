@@ -8,11 +8,11 @@ class Game extends React.Component {
     super(props);
     this.state = {
       gameStatus: 'inputting bet',
-      dealerCards: ['10 of Spades', 'Q of Hearts'],
-      playerCards: ['A of Hearts', 'J of Clubs'],
+      resultText: 'test!',
+      dealerCards: [],
+      playerCards: [],
       deck: [],
-      betAmount: null,
-      resultText: 'test!'
+      betAmount: null
     };
   }
 
@@ -20,11 +20,17 @@ class Game extends React.Component {
     this.setState(obj);
   }
 
-  hasBlackjack = (cards) => (
-    this.props.gameLogic.getHandTotal(cards).includes(21)
-  );
+  handleBetSubmit = (event) => {
+    event.preventDefault();
+    let betAmount = document.getElementById('betamount').value;
+    if (betAmount <= 0 || betAmount > this.props.currentBankroll) {
+      alert('Please enter a valid bet amount.');
+    } else {
+      this.setState({ betAmount, gameStatus: 'bet submitted' });
+    }
+  };
 
-  dealInitialCards = () => {
+  handleDeal = () => {
     let deck = this.props.gameLogic.getNewDeck();
     let playerCards = [];
     let dealerCards = [];
@@ -33,19 +39,7 @@ class Game extends React.Component {
     dealerCards.push(deck.pop());
     playerCards.push(deck.pop());
     dealerCards.push(deck.pop());
-    this.setState({ playerCards, dealerCards, deck }, this.handleBlackjack);
-  }
-
-  handleDealerTurn = () => {
-    let dealerCards = [...this.state.dealerCards];
-    let deck = [...this.state.deck];
-    let dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
-    while (Math.min(dealerHandTotal) <= 17) {
-      dealerCards.push(deck.pop());
-    }
-    this.setState({ dealerCards, deck }, () => {
-      // TODO
-    });
+    this.setState({ playerCards, dealerCards, deck, gameStatus:'in play' }, this.handleBlackjack);
   }
 
   handleBlackjack = () => {
@@ -55,20 +49,29 @@ class Game extends React.Component {
     }
   }
 
+  hasBlackjack = (cards) => (
+    this.props.gameLogic.getHandTotal(cards).includes(21)
+  );
+
   handlePlayerHit = () => {
-    let playerCards = [...this.props.playerCards];
-    let deck = [...this.props.deck];
+    let playerCards = [...this.state.playerCards];
+    let deck = [...this.state.deck];
     playerCards.push(deck.pop());
     this.setState({ playerCards, deck });
-    this.props.updateGameState({ playerCards, deck }, this.handlePlayerBust);
+    this.setState({ playerCards, deck }, this.handlePlayerBust);
   };
 
   handlePlayerBust = () => {
     const playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
-    if (Math.min(playerHandTotal) > 21) {
-      this.props.updateAppState({
+    if (Math.min(...playerHandTotal) > 21) {
+      document.getElementById('betamount').value = 0;
+      this.setState({
         resultText: 'Player busted!',
-        currentBankroll: this.props.currentBankroll - this.state.betAmount
+        gameStatus: 'inputting bet'
+      }, () => {
+        this.props.setAppState({
+          currentBankroll: this.props.currentBankroll - this.state.betAmount
+        })
       });
     }
   }
@@ -76,25 +79,53 @@ class Game extends React.Component {
   handlePlayerStay = () => {
     console.log('Player stays!');
     // TO DO
+    handleDealerTurn();
+    this.setState({ gameStatus: 'inputting bet' });
+  }
+
+  handleDealerTurn = () => {
+    let dealerCards = [...this.state.dealerCards];
+    let deck = [...this.state.deck];
+    let dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
+    let playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
+    while (Math.min(dealerHandTotal) <= 17) {
+      dealerCards.push(deck.pop());
+      dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
+    }
+    
+    if (dealerHandTotal.length === 1 || dealerHandTotal[1] > 21) { dealerHandTotal = dealerHandTotal[0]; }
+    else { dealerHandTotal = dealerHandTotal[1]; }
+
+    if (playerHandTotal.length === 1 || playerHandTotal[1] > 21) { playerHandTotal = playerHandTotal[0]; }
+    else { playerHandTotal = playerHandTotal[1]; }
+
+    this.setState({ dealerCards, deck }, () => {
+      let newBankroll, newResultText;
+      if (dealerHandTotal > 21) {
+        newBankroll = this.props.currentBankroll + this.state.betAmount;
+        newResultText = 'Dealer busted!';
+      } else if (playerHandTotal === dealerHandTotal) {
+        newBankroll = this.props.currentBankroll;
+        newResultText = 'It\'s a push!';
+      } else if (playerHandTotal > dealerHandTotal) {
+        newBankroll = this.props.currentBankroll + this.state.betAmount;
+        newResultText = 'Player wins!';
+      } else {
+        newBankroll = this.props.currentBankroll - this.state.betAmount;
+        newResultText = 'Dealer wins!';
+      }
+    })
+
   }
 
   handleQuitGame = () => {
-    this.props.updateAppState({ currentPage: 'Login' });
+    this.props.setAppState({ currentPage: 'Login' });
   }
 
   handleResetBankroll = () => {
-    this.props.updateAppState({ currentBankroll: 1000 });
+    this.props.setAppState({ currentBankroll: 1000 });
     // TODO?
   }
-
-  handleBetSubmit = () => {
-    let betAmount = document.getElementById('betamount').value;
-    if (betAmount <= 0) {
-      alert('Please enter a valid bet amount.');
-    } else {
-      this.setState({ betAmount , gameStatus: 'bet submitted' });
-    }
-  };
 
   render = () => (
     <div>
@@ -106,12 +137,16 @@ class Game extends React.Component {
         currentBankroll={this.props.currentBankroll}
       />
       <ControlPad
-        resultText={this.props.resultText}
-        dealInitialCards={this.dealInitialCards}
-        handleResetBankroll={this.handleResetBankroll}
-        handleQuitGame={this.handleQuitGame}
-        handlePlayerStay={this.handlePlayerStay}
+        resultText={this.state.resultText}
+        currentBankroll={this.props.currentBankroll}
+        gameStatus={this.state.gameStatus}
+        betAmount={this.state.betAmount}
         handleBetSubmit={this.handleBetSubmit}
+        handleDeal={this.handleDeal}
+        handlePlayerHit={this.handlePlayerHit}
+        handlePlayerStay={this.handlePlayerStay}
+        handleQuitGame={this.handleQuitGame}
+        handleResetBankroll={this.handleResetBankroll}
       />
     </div>
   );
