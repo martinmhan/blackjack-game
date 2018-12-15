@@ -88,6 +88,8 @@ class Game extends React.Component {
     let deck = [...this.state.deck];
     let dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
     let playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
+    let newBankroll, newResultText;
+
     while (Math.min(dealerHandTotal) <= 17) {
       dealerCards.push(deck.pop());
       dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
@@ -99,23 +101,23 @@ class Game extends React.Component {
     if (playerHandTotal.length === 1 || playerHandTotal[1] > 21) { playerHandTotal = playerHandTotal[0]; }
     else { playerHandTotal = playerHandTotal[1]; }
 
-    this.setState({ dealerCards, deck }, () => {
-      let newBankroll, newResultText;
-      if (dealerHandTotal > 21) {
-        newBankroll = this.props.currentBankroll + this.state.betAmount;
-        newResultText = 'Dealer busted!';
-      } else if (playerHandTotal === dealerHandTotal) {
-        newBankroll = this.props.currentBankroll;
-        newResultText = 'It\'s a push!';
-      } else if (playerHandTotal > dealerHandTotal) {
-        newBankroll = this.props.currentBankroll + this.state.betAmount;
-        newResultText = 'Player wins!';
-      } else {
-        newBankroll = this.props.currentBankroll - this.state.betAmount;
-        newResultText = 'Dealer wins!';
-      }
-    })
+    if (dealerHandTotal > 21) {
+      newBankroll = this.props.currentBankroll + this.state.betAmount;
+      newResultText = 'Dealer busted!';
+    } else if (playerHandTotal === dealerHandTotal) {
+      newBankroll = this.props.currentBankroll;
+      newResultText = 'It\'s a push!';
+    } else if (playerHandTotal > dealerHandTotal) {
+      newBankroll = this.props.currentBankroll + this.state.betAmount;
+      newResultText = 'Player wins!';
+    } else {
+      newBankroll = this.props.currentBankroll - this.state.betAmount;
+      newResultText = 'Dealer wins!';
+    }
 
+    this.setState({ dealerCards, deck, resultText: newResultText }, () => {
+      this.props.setAppState({ currentBankroll: newBankroll });
+    });
   }
 
   handleQuitGame = () => {
