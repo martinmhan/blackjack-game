@@ -1,7 +1,7 @@
 const React = require('react');
 const Dealer = require('./Dealer.js');
 const Player = require('./Player.js');
-const Footer = require('./Footer.js');
+const ControlPad = require('./ControlPad.js');
 
 class Game extends React.Component {
   constructor(props) {
@@ -10,7 +10,9 @@ class Game extends React.Component {
       gameStatus: 'inputting bet',
       dealerCards: ['10 of Spades', 'Q of Hearts'],
       playerCards: ['A of Hearts', 'J of Clubs'],
-      deck: []
+      deck: [],
+      betAmount: null,
+      resultText: 'test!'
     };
   }
 
@@ -27,9 +29,7 @@ class Game extends React.Component {
     dealerCards.push(deck.pop());
     playerCards.push(deck.pop());
     dealerCards.push(deck.pop());
-    this.setState({ playerCards, dealerCards, deck });
-
-    // handle Blackjacks (player or dealer)
+    this.setState({ playerCards, dealerCards, deck }, handleBlackjack);
   }
 
   dealCardToDealer = () => {
@@ -39,28 +39,66 @@ class Game extends React.Component {
     this.setState({ dealerCards, deck });
   }
 
+  handleBlackjack = () => {
+    if (this.props.gameLogic.hasBlackjack(this.state.playerCards) || this.props.gameLogic.hasBlackjack(this.state.dealerCards)) {
+      console.log('blackjack!');
+    }
+  }
+
+  handlePlayerHit = () => {
+    let playerCards = [...this.props.playerCards];
+    let deck = [...this.props.deck];
+    playerCards.push(deck.pop());
+    this.setState({ playerCards, deck });
+    this.props.updateGameState({ playerCards, deck }, this.handlePlayerBust);
+  };
+
+  handlePlayerBust = () => {
+    if (Math.min(this.state.handTotal) > 21) {
+      this.props.updateAppState({
+        resultText: 'Player busted!',
+        currentBankroll: this.props.currentBankroll - this.state.betAmount
+      });
+    }
+  }
+
+  handlePlayerStay = () => {
+    console.log('Player stays!');
+  }
+
+  handleQuitGame = () => {
+    this.props.updateAppState({ currentPage: 'Login' });
+  }
+
+  handleResetBankroll = () => {
+    this.props.updateAppState({ currentBankroll: 1000 });
+  }
+
   render = () => (
     <div>
-      <Player
-        cards={this.state.playerCards}
-        deck={this.state.deck}
-        gameStatus={this.state.gameStatus}
-        gameLogic={this.props.gameLogic}
-        currentUser={this.props.currentUser}
-        currentBankroll={this.props.currentBankroll}
-        updateAppState={this.props.updateAppState}
-        updateGameState={this.updateGameState}
-        dealInitialCards={this.dealInitialCards}
-      />
       <Dealer
         cards={this.state.dealerCards}
         gameLogic={this.props.gameLogic}
         updateGameState={this.updateGameState}
       />
-      <Footer 
-        currentUser={this.props.currentUser}
-        currentBankroll={this.props.currentBankroll}
+      <Player
+        cards={this.state.playerCards}
+        deck={this.state.deck}
+        gameStatus={this.state.gameStatus}
+      />
+      <ControlPad
         resultText={this.props.resultText}
+        currentUser={this.props.currentUser}
+        updateAppState={this.props.updateAppState}
+        currentBankroll={this.props.currentBankroll}
+        deck={this.state.deck}
+        gameStatus={this.state.gameStatus}
+        playerCards={this.state.playerCards}
+        updateGameState={this.updateGameState}
+        dealInitialCards={this.dealInitialCards}
+        handleResetBankroll={this.handleResetBankroll}
+        handleQuitGame={this.handleQuitGame}
+        handlePlayerStay={this.handlePlayerStay}
       />
     </div>
   );

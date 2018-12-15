@@ -9,31 +9,25 @@ class App extends React.Component {
     this.state = {
       currentPage: 'Login',
       currentUser: null,
-      currentBankroll: null,
-      resultText:'test!'
+      currentBankroll: null, // gets updated by Login component
     };
-  }
-
-  renderCurrentPage = () => {
-    switch (this.state.currentPage) {
-      case 'Login':
-        return (<Login currentUser={this.state.currentUser} updateAppState={this.updateAppState} />);
-        break;
-      case 'Game':
-        return (<Game 
-          currentUser={this.state.currentUser}
-          currentBankroll={this.state.currentBankroll}
-          updateAppState={this.updateAppState}
-          gameLogic={gameLogic} 
-          />);
-        break;
-      default:
-        break;
-    }
   }
 
   updateAppState = (obj) => {
     this.setState(obj);
+  }
+
+  renderCurrentPage = () => {
+    if (this.state.currentPage === 'Login') {
+      return (<Login currentUser={this.state.currentUser} updateAppState={this.updateAppState} />);
+    } else if (this.state.currentPage === 'Game') {
+      return (<Game
+        currentUser={this.state.currentUser}
+        currentBankroll={this.state.currentBankroll}
+        updateAppState={this.updateAppState}
+        gameLogic={gameLogic} 
+        />);
+    }
   }
 
   render = () => (
