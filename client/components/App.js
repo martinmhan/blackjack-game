@@ -1,4 +1,5 @@
 const React = require('react');
+const axios = require('axios');
 const Login = require('./Login.js');
 const Game = require('./game.js');
 const gameLogic = require('../lib/gameLogic.js');
@@ -9,12 +10,12 @@ class App extends React.Component {
     this.state = {
       currentPage: 'Login',
       currentUser: null,
-      currentBankroll: null, // gets updated by Login component
+      currentBankroll: null // gets updated by Login component
     };
   }
 
-  setAppState = (obj) => {
-    this.setState(obj);
+  setAppState = (obj, callback) => {
+    this.setState(obj, callback);
   }
 
   renderCurrentPage = () => {
@@ -23,6 +24,7 @@ class App extends React.Component {
         <Login
           currentUser={this.state.currentUser}
           setAppState={this.setAppState}
+          getUser={this.getUser}
         />);
     } else if (this.state.currentPage === 'Game') {
       return (

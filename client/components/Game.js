@@ -17,15 +17,20 @@ class Game extends React.Component {
     };
   }
 
+  // TODO
+    // fix user bankroll not updating in DB
+    // fix multiple identical username entries in DB collection
+
+  // setGameState = (obj) => {
+  //   this.setState(obj);
+  // }
+
   saveUserBankroll = () => {
+    console.log(`about to save user bankroll for ${this.props.currentUser} for $${this.props.currentBankroll}`);
     axios.put('/api/user', {
       username: this.props.currentUser,
       bankroll: this.props.currentBankroll
     });
-  }
-
-  updateGameState = (obj) => {
-    this.setState(obj);
   }
 
   handleBetSubmit = (event) => {
@@ -34,7 +39,13 @@ class Game extends React.Component {
     if (betAmount <= 0 || betAmount > this.props.currentBankroll) {
       alert('Please enter a valid bet amount.');
     } else {
-      this.setState({ betAmount, gameStatus: 'bet submitted' });
+      this.setState({
+        betAmount,
+        gameStatus: 'bet submitted',
+        resultText: '',
+        dealerCards: [],
+        playerCards: []
+      });
     }
   };
 
@@ -130,7 +141,7 @@ class Game extends React.Component {
     this.props.setAppState({ currentBankroll: 1000 }, this.saveUserBankroll);
     // TODO?
   }
-
+p
   render = () => (
     <div>
       <Dealer
@@ -141,8 +152,8 @@ class Game extends React.Component {
         currentBankroll={this.props.currentBankroll}
       />
       <ControlPad
-        resultText={this.state.resultText}
         currentBankroll={this.props.currentBankroll}
+        resultText={this.state.resultText}
         gameStatus={this.state.gameStatus}
         betAmount={this.state.betAmount}
         handleBetSubmit={this.handleBetSubmit}

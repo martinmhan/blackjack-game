@@ -47,10 +47,20 @@ module.exports = {
       const { username, bankroll } = req.body;
       dbHelpers.updateBankroll(username, bankroll)
         .then(() => {
-          console.log('Successful updated user bankroll');
+          res.status(200).send('Successfully updated user bankroll');
         })
         .catch((err) => {
-          console.log('Error updating user bankroll');
+          res.status(200).send('Error updating user bankroll');
+        });
+    },
+    get: (req, res) => {
+      console.log('GET user request received for params: ', req.params);
+      const { username } = req.params;
+      console.log('username: ', username);
+      dbHelpers.findUser(username)
+        .then(data => {
+          console.log('findUser data: ', data);
+          res.send(data);
         });
     }
   }

@@ -6,6 +6,7 @@ module.exports = {
     return User.findOne({ username });
   },
   updateBankroll: (username, bankroll) => {
+    console.log('about to update bankroll for username: ', username);
     return User.findOneAndUpdate({ username }, { bankroll });
-  } 
+  }
 };

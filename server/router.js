@@ -10,6 +10,10 @@ router
 	.post(controller.login.new.post);
 
 router
+	.route('/user/:username')
+	.get(controller.user.get);
+
+router
 	.route('/user')
 	.put(controller.user.put);
 

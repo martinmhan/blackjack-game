@@ -19,12 +19,19 @@ class Login extends React.Component {
     let password = document.getElementById('passwordexisting').value;
 
     axios.post('/api/login/existing', { username, password })
-      .then(({data}) => {
+      .then( ({data}) => {
         if (data === 'Username does not exist.' || data === 'Incorrect password') {
           alert(data);
         } else if (typeof data === 'number') {
-          this.props.setAppState({ currentUser: username, currentBankroll: parseInt(data) });
-          this.setState({ loggedIn: true, loginmessage: `Welcome, ${this.props.currentUser}` });
+          this.setState({
+            loggedIn: true,
+            loginmessage: `Welcome back, ${username}`
+          }, () => {
+            this.props.setAppState({
+              currentUser: username,
+              currentBankroll: data
+            })
+          });
         } else {
           console.error('Login error');
         }
@@ -41,17 +48,26 @@ class Login extends React.Component {
       alert('Please enter a password');
     } else {
       axios.post('/api/login/new', { username, password })
-      .then(({data}) => {
-        if (data === 'Username already exists. Please select a different one.') {
-          alert(data);
-        } else {
-          this.setState({ loggedIn: true, loginmessage: `New user account has been created for ${username}`});
-        }
-      });
+        .then(({data}) => {
+          if (data === 'Username already exists. Please select a different one.') {
+            alert(data);
+          } else {
+            this.setState({
+              loggedIn: true,
+              loginmessage: `New user account has been created for ${username}`
+            }, () => {
+              this.props.setAppState({
+                currentUser: username,
+                currentBankroll: 1000
+              });
+            });
+          }
+        });
     }
   };
 
   startGame = () => {
+    console.log(this.props.currentBankroll);
     this.props.setAppState({ currentPage: 'Game' });
   }
 
