@@ -11,8 +11,6 @@ class ControlPad extends React.Component {
 
   render = () => (
   <div className="controlpad">
-    Game Status: {this.props.gameStatus}<br></br>
-    Bet Amount: {this.props.betAmount}
     <div id="results">{this.props.resultText}</div>
     <form id="betsubmitform" onSubmit={this.props.handleBetSubmit}>
       Bet Amount:

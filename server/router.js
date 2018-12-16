@@ -10,7 +10,7 @@ router
 	.post(controller.login.new.post);
 
 router
-	.route('/:userId')
+	.route('/user')
 	.put(controller.user.put);
 
 module.exports = router;
