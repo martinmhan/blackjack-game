@@ -1,5 +1,5 @@
 const User = require('../database/models/User.js');
-const dbHelpers = require('./dbHelpers.js');
+const dbHelpers = require('../database/dbHelpers.js');
 
 module.exports = {
   login: {

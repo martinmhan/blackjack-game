@@ -2,6 +2,7 @@ const React = require('react');
 const Dealer = require('./Dealer.js');
 const Player = require('./Player.js');
 const ControlPad = require('./ControlPad.js');
+const dbHelpers = require('../../database/dbHelpers.js');
 
 class Game extends React.Component {
   constructor(props) {
@@ -14,6 +15,10 @@ class Game extends React.Component {
       deck: [],
       betAmount: null
     };
+  }
+
+  saveUserBankroll = () => {
+    dbHelpers.updateBankroll(this.props.currentUser, this.props.currentBankroll);
   }
 
   updateGameState = (obj) => {
@@ -77,13 +82,7 @@ class Game extends React.Component {
   }
 
   handlePlayerStay = () => {
-    console.log('Player stays!');
-    // TO DO
-    handleDealerTurn();
-    this.setState({ gameStatus: 'inputting bet' });
-  }
-
-  handleDealerTurn = () => {
+    console.log('handleDealerTurn invoked');
     let dealerCards = [...this.state.dealerCards];
     let deck = [...this.state.deck];
     let dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
@@ -94,7 +93,7 @@ class Game extends React.Component {
       dealerCards.push(deck.pop());
       dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
     }
-    
+
     if (dealerHandTotal.length === 1 || dealerHandTotal[1] > 21) { dealerHandTotal = dealerHandTotal[0]; }
     else { dealerHandTotal = dealerHandTotal[1]; }
 
@@ -115,7 +114,7 @@ class Game extends React.Component {
       newResultText = 'Dealer wins!';
     }
 
-    this.setState({ dealerCards, deck, resultText: newResultText }, () => {
+    this.setState({ dealerCards, deck, resultText: newResultText, gameStatus: 'inputting bet' }, () => {
       this.props.setAppState({ currentBankroll: newBankroll });
     });
   }
