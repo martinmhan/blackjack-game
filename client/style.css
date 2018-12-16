@@ -32,6 +32,11 @@ form {
   margin: 15px;
 }
 
+img {
+  width: 80px;
+  height: 130px;
+}
+
 .controlpad {
   position: fixed;
   bottom: 25px;
@@ -46,9 +51,6 @@ form {
   width: 75px;
   height: 115px;
   float: left;
-  border-radius: 20%;
-  border-width: 3px;
-  border-style: solid;
   margin-left: 15px;
   margin-top: 5px;
   margin-bottom: 5px;

@@ -1,12 +1,14 @@
 module.exports = {
   getNewDeck: () => {
     let deck = [];
-    let suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades'];
+    let suits = ['D', 'C', 'H', 'S'];
+    // let suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades'];
     let numbers = ['A', '2', '3','4','5','6','7','8','9','10','J','Q','K'];
     
     for (let i = 0; i < suits.length; i++) {
       for (let j = 0; j < numbers.length; j++) {
-        deck.push(numbers[j] + ' of ' + suits[i]);
+        deck.push(numbers[j] + suits[i]);
+        // deck.push(numbers[j] + ' of ' + suits[i]);
       }
     }
 
@@ -40,7 +42,8 @@ module.exports = {
     };
 
     let total = 0;
-    let cardNums = cards.map(card => card.slice(0, card.indexOf(' ')));
+    let cardNums = cards.map(card => card.slice(0, card.length - 1));
+    // let cardNums = cards.map(card => card.slice(0, card.indexOf(' ')));
     for (let i = 0; i < cardNums.length; i++) {
       total += cardValues[cardNums[i]];
     }
