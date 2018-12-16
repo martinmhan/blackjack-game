@@ -5,29 +5,28 @@ module.exports = {
   login: {
     existing: {
       post: (req, res) => {
-        console.log('GET request for existing user login received');
         const { username, password } = req.body;
-
         dbHelpers.findUser(username)
           .then((user) => {
+            let response = { validLogin: false, message: null };
             if (!user) {
-              res.send('Username does not exist.');
+              response.message = 'Username does not exist.';
             } else if (user.password !== password) {
-              res.send('Incorrect password');
+              response.message = 'Incorrect password';
             } else {
-              res.send(user.bankroll.toString());
+              response.validLogin = true;
+              response.message = user.bankroll.toString();
             }
+            res.send(response);
           });
       }
     },
     new: {
       post: (req, res) => {
-        console.log('GET request for new user login received');
         const { username, password } = req.body;
 
         dbHelpers.findUser(username)
           .then((user) => {
-            console.log(user);
             if (!user) {
               let newUser = new User({ username, password, bankroll: 1000 });
               newUser.save()
@@ -43,7 +42,6 @@ module.exports = {
   },
   user: {
     put: (req, res) => {
-      console.log('PUT request received');
       const { username, bankroll } = req.body;
       dbHelpers.updateBankroll(username, bankroll)
         .then(() => {
@@ -54,14 +52,9 @@ module.exports = {
         });
     },
     get: (req, res) => {
-      console.log('GET user request received for params: ', req.params);
       const { username } = req.params;
-      console.log('username: ', username);
       dbHelpers.findUser(username)
-        .then(data => {
-          console.log('findUser data: ', data);
-          res.send(data);
-        });
+        .then(data => { res.send(data) });
     }
   }
 };

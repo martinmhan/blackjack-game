@@ -20,22 +20,21 @@ class Login extends React.Component {
 
     axios.post('/api/login/existing', { username, password })
       .then( ({data}) => {
-        if (data === 'Username does not exist.' || data === 'Incorrect password') {
-          alert(data);
-        } else if (typeof data === 'number') {
+        if (!data.validLogin) {
+          alert(data.message);
+        } else {
           this.setState({
             loggedIn: true,
             loginmessage: `Welcome back, ${username}`
           }, () => {
             this.props.setAppState({
               currentUser: username,
-              currentBankroll: data
+              currentBankroll: parseInt(data.message)
             })
           });
-        } else {
-          console.error('Login error');
         }
-      });
+      })
+      .catch(err => console.error(err));
   };
 
   validateNewUser = (event) => {
@@ -62,12 +61,12 @@ class Login extends React.Component {
               });
             });
           }
-        });
+        })
+        .catch(err => console.error(err));
     }
   };
 
   startGame = () => {
-    console.log(this.props.currentBankroll);
     this.props.setAppState({ currentPage: 'Game' });
   }
 

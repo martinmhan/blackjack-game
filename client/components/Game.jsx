@@ -62,7 +62,7 @@ class Game extends React.Component {
       newBankroll = this.props.currentBankroll + (this.state.betAmount * 1.5);
     } else if (this.hasBlackjack(this.state.dealerCards)) {
       newResultText = 'Dealer has blackjack!';
-      newBankroll = this.props.currentBankroll + (this.state.betAmount * 1.5);
+      newBankroll = this.props.currentBankroll - this.state.betAmount;
     } else {
       return;
     }
