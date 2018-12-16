@@ -1,14 +1,14 @@
 const React = require('react');
 const axios = require('axios');
-const Dealer = require('./Dealer.js');
-const Player = require('./Player.js');
-const ControlPad = require('./ControlPad.js');
+const Dealer = require('./Dealer.jsx');
+const Player = require('./Player.jsx');
+const ControlPad = require('./ControlPad.jsx');
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameStatus: 'inputting bet',
+      gameStatus: 'inputting bet', // possible values; 'inputting bet', 'bet submitted', 'in play'
       resultText: '',
       dealerCards: [],
       playerCards: [],
@@ -17,16 +17,7 @@ class Game extends React.Component {
     };
   }
 
-  // TODO
-    // fix user bankroll not updating in DB
-    // fix multiple identical username entries in DB collection
-
-  // setGameState = (obj) => {
-  //   this.setState(obj);
-  // }
-
   saveUserBankroll = () => {
-    console.log(`about to save user bankroll for ${this.props.currentUser} for $${this.props.currentBankroll}`);
     axios.put('/api/user', {
       username: this.props.currentUser,
       bankroll: this.props.currentBankroll
@@ -62,48 +53,58 @@ class Game extends React.Component {
   }
 
   handleBlackjack = () => {
-    if (this.hasBlackjack(this.state.playerCards) || this.hasBlackjack(this.state.dealerCards)) {
-      console.log('blackjack!');
-      // TODO
+    let newBankroll, newResultText;
+    if (this.hasBlackjack(this.state.playerCards) && this.hasBlackjack(this.state.dealerCards)) {
+      newResultText = 'It\'s a push!';
+      newBankroll = this.props.currentBankroll;
+    } else if (this.hasBlackjack(this.state.playerCards)) {
+      newResultText = 'Player has blackjack!';
+      newBankroll = this.props.currentBankroll + (this.state.betAmount * 1.5);
+    } else if (this.hasBlackjack(this.state.dealerCards)) {
+      newResultText = 'Dealer has blackjack!';
+      newBankroll = this.props.currentBankroll + (this.state.betAmount * 1.5);
+    } else {
+      return;
     }
+
+    this.props.setAppState({ currentBankroll: newBankroll }, () => {
+      this.setState({ resultText: newResultText, gameStatus: 'inputting bet' });
+    });
   }
 
-  hasBlackjack = (cards) => (
-    this.props.gameLogic.getHandTotal(cards).includes(21)
-  );
+  hasBlackjack = (cards) => ( this.props.gameLogic.getHandTotal(cards).includes(21) );
 
   handlePlayerHit = () => {
     let playerCards = [...this.state.playerCards];
     let deck = [...this.state.deck];
     playerCards.push(deck.pop());
-    this.setState({ playerCards, deck });
     this.setState({ playerCards, deck }, this.handlePlayerBust);
   };
 
   handlePlayerBust = () => {
-    const playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
+    let playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
     if (Math.min(...playerHandTotal) > 21) {
       document.getElementById('betamount').value = 0;
-      this.setState({
-        resultText: 'Player busted!',
-        gameStatus: 'inputting bet'
+      this.props.setAppState({
+        currentBankroll: this.props.currentBankroll - this.state.betAmount
       }, () => {
-        this.props.setAppState({
-          currentBankroll: this.props.currentBankroll - this.state.betAmount
+        document.getElementById('betamount').value = 0;
+        this.setState({
+          resultText: 'Player busted!',
+          gameStatus: 'inputting bet'          
         }, this.saveUserBankroll);
       });
     }
   }
 
   handlePlayerStay = () => {
-    console.log('handlePlayerStay invoked');
     let dealerCards = [...this.state.dealerCards];
     let deck = [...this.state.deck];
     let dealerHandTotal = this.props.gameLogic.getHandTotal(this.state.dealerCards);
     let playerHandTotal = this.props.gameLogic.getHandTotal(this.state.playerCards);
     let newBankroll, newResultText;
 
-    while (Math.min(dealerHandTotal) <= 17) {
+    while (Math.min(...dealerHandTotal) <= 17) {
       dealerCards.push(deck.pop());
       dealerHandTotal = this.props.gameLogic.getHandTotal(dealerCards);
     }
@@ -128,6 +129,7 @@ class Game extends React.Component {
       newResultText = 'Dealer wins!';
     }
 
+    document.getElementById('betamount').value = 0;
     this.setState({ dealerCards, deck, resultText: newResultText, gameStatus: 'inputting bet' }, () => {
       this.props.setAppState({ currentBankroll: newBankroll }, this.saveUserBankroll);
     });
@@ -139,13 +141,13 @@ class Game extends React.Component {
 
   handleResetBankroll = () => {
     this.props.setAppState({ currentBankroll: 1000 }, this.saveUserBankroll);
-    // TODO?
   }
-p
+
   render = () => (
     <div>
       <Dealer
         cards={this.state.dealerCards}
+        gameStatus={this.state.gameStatus}
       />
       <Player
         cards={this.state.playerCards}
@@ -155,7 +157,6 @@ p
         currentBankroll={this.props.currentBankroll}
         resultText={this.state.resultText}
         gameStatus={this.state.gameStatus}
-        betAmount={this.state.betAmount}
         handleBetSubmit={this.handleBetSubmit}
         handleDeal={this.handleDeal}
         handlePlayerHit={this.handlePlayerHit}

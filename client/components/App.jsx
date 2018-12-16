@@ -1,7 +1,6 @@
 const React = require('react');
-const axios = require('axios');
-const Login = require('./Login.js');
-const Game = require('./game.js');
+const Login = require('./Login.jsx');
+const Game = require('./Game.jsx');
 const gameLogic = require('../lib/gameLogic.js');
 
 class App extends React.Component {
@@ -10,7 +9,7 @@ class App extends React.Component {
     this.state = {
       currentPage: 'Login',
       currentUser: null,
-      currentBankroll: null // gets updated by Login component
+      currentBankroll: null
     };
   }
 
