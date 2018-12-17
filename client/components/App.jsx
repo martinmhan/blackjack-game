@@ -17,6 +17,8 @@ class App extends React.Component {
     this.setState(obj, callback);
   }
 
+  // add map table and component decorator function
+    // invoke in App rende
   renderCurrentPage = () => {
     if (this.state.currentPage === 'Login') {
       return (

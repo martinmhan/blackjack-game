@@ -1,7 +1,6 @@
 const React = require('react');
 
 const Card = (props) => {
-  console.log(props.card);
   let imgPath = `images/${props.card}.jpg`;
   if (props.gameStatus === 'in play' && props.index === 0) {
     return (
