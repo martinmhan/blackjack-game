@@ -1,16 +1,18 @@
-# blackjack-game
-Basic Blackjack game built with MongoDB, Express, React, and Node
+# DESCRIPTION
+Basic full stack blackjack game built with MongoDB, Express, React, and Node
+
+# INSTRUCTIONS
+1. npm install
+2. npm run build
+3. npm start
 
 # TO DO
-Server
-  Use sessions/authentication middleware to hash password and allow players to stay logged in
-Client
-  Refactor blackjack hand into a container component inside Player component
-  Allow player to split hands into two
-  Allow player to double
-  Improve CSS styling / animations
-
+Incorporate sessions/authentication middleware
+Fix position of components when window is resized
+Improve CSS styling, add animations
+Allow player to split hands into two
+Allow player to double bet
 
 # V2
 Use sockets to allow multiple players to join different tables
-Add a Tables view to show available tables and # of current players in each
+Add a Tables view to show available tables and # of players in each
