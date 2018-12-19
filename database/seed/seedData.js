@@ -1,17 +1,11 @@
 const User = require('../models/User.js'); // import the User model
 
 const seedData = [
-  { username: 'martin', password: 'asdf', bankroll: 1000 },
-  { username: 'test', password: 'asdf', bankroll: 1000 },
-  { username: 'test2', password: 'asdf', bankroll: 1000 },
-  { username: 'test3', password: 'asdf', bankroll: 1000 },
+  { username: 'testuser1', password: 'asdf', bankroll: 1000 },
+  { username: 'testuser2', password: 'asdf', bankroll: 1000 },
+  { username: 'testuser3', password: 'asdf', bankroll: 1000 },
+  { username: 'testuser4', password: 'asdf', bankroll: 1000 },
 ];
 
-const insertData = () => {
-  User.insertMany(seedData) // invoke insertMany with array of seed data
-    .then(() => {
-      console.log('Seed data has been inserted');
-    });
-};
-
-insertData();
+User.insertMany(seedData)
+  .then(() => { console.log('Seed data has been inserted'); });

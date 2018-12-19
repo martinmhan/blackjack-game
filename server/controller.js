@@ -17,7 +17,7 @@ module.exports = {
               response.validLogin = true;
               response.message = user.bankroll.toString();
             }
-            res.send(response);
+            res.status(200).send(response);
           });
       }
     },
@@ -30,9 +30,7 @@ module.exports = {
             if (!user) {
               let newUser = new User({ username, password, bankroll: 1000 });
               newUser.save()
-                .then(() => {
-                  res.send('New user has been created');
-                });
+                .then( () => res.status(200).send('New user has been created') );
             } else {
               res.send('Username already exists. Please select a different one.');
             }
@@ -44,17 +42,14 @@ module.exports = {
     put: (req, res) => {
       const { username, bankroll } = req.body;
       dbHelpers.updateBankroll(username, bankroll)
-        .then(() => {
-          res.status(200).send('Successfully updated user bankroll');
-        })
-        .catch((err) => {
-          res.status(200).send('Error updating user bankroll');
-        });
+        .then( () => res.status(200).send('Successfully updated user bankroll') )
+        .catch( err => res.status(404).send(err) );
     },
     get: (req, res) => {
       const { username } = req.params;
       dbHelpers.findUser(username)
-        .then(data => { res.send(data) });
+        .then( data => res.status(200).send(data) )
+        .catch( err => res.status(404).send(err) );
     }
   }
 };

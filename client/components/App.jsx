@@ -15,10 +15,8 @@ class App extends React.Component {
 
   setAppState = (obj, callback) => {
     this.setState(obj, callback);
-  }
+  };
 
-  // add map table and component decorator function
-    // invoke in App rende
   renderCurrentPage = () => {
     if (this.state.currentPage === 'Login') {
       return (
@@ -36,7 +34,7 @@ class App extends React.Component {
           gameLogic={gameLogic} 
         />);
     }
-  }
+  };
 
   render = () => (
     <div>

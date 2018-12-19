@@ -5,8 +5,8 @@ const PORT = process.env.PORT || 9001;
 
 app.listen(PORT, (err) => {
   if (err) {
-    console.log('Error connecting to port: ', PORT);
+    console.error(err);
   } else {
-    console.log('Successfully connected to port: ', PORT);
+    console.log('Listening on port: ', PORT);
   }
 });
