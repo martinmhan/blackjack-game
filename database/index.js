@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 
-mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/blackjackdb', { useNewUrlParser: true })
   .then(() => { console.log('Successfully connected to mongodb'); })
   .catch((err) => { console.error(err); });

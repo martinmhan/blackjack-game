@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Login from './Login.jsx';
 import Game from './Game.jsx';
 import gameLogic from '../lib/gameLogic.js';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {

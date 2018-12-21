@@ -1,5 +1,5 @@
-const React = require('react');
-const Card = require('./Card.jsx');
+import React from 'react';
+import Card from './Card.jsx';
 
 const Player = (props) => (
   <div id="playercomponent">
@@ -10,4 +10,4 @@ const Player = (props) => (
   </div>
 );
 
-module.exports = Player;
+export default Player;

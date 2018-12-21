@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import Dealer from './Dealer.jsx';
 import Player from './Player.jsx';
 import ControlPad from './ControlPad.jsx';
 
-class Game extends React.Component {
+class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,7 @@ class Game extends React.Component {
       dealerCards: [],
       playerCards: [],
       deck: [],
-      betAmount: null
+      betAmount: null,
     };
   }
 
