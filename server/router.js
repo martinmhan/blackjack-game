@@ -2,19 +2,19 @@ const router = require('express').Router();
 const controller = require('./controller.js');
 
 router
-	.route('/login/existing')
-	.post(controller.login.existing.post);
+  .route('/login/existing')
+  .post(controller.login.existing.post);
 
 router
-	.route('/login/new')
-	.post(controller.login.new.post);
+  .route('/login/new')
+  .post(controller.login.new.post);
 
 router
-	.route('/user/:username')
-	.get(controller.user.get);
+  .route('/user/:username')
+  .get(controller.user.get);
 
 router
-	.route('/user')
-	.put(controller.user.put);
+  .route('/user')
+  .put(controller.user.put);
 
 module.exports = router;

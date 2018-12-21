@@ -1,4 +1,5 @@
-const User = require('../models/User.js'); // import the User model
+/* eslint-disable no-console */
+const User = require('../models/User.js');
 
 const seedData = [
   { username: 'testuser1', password: 'asdf', bankroll: 1000 },

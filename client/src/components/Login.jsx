@@ -1,5 +1,5 @@
-const React = require('react');
-const axios = require('axios');
+import React from 'react';
+import axios from 'axios';
 
 class Login extends React.Component {
   constructor(props) {
@@ -94,4 +94,4 @@ class Login extends React.Component {
   );
 }
 
-module.exports = Login;
+export default Login;

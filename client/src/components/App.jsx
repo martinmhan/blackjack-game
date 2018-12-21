@@ -1,7 +1,7 @@
-const React = require('react');
-const Login = require('./Login.jsx');
-const Game = require('./Game.jsx');
-const gameLogic = require('../lib/gameLogic.js');
+import React from 'react';
+import Login from './Login.jsx';
+import Game from './Game.jsx';
+import gameLogic from '../lib/gameLogic.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -44,4 +44,4 @@ class App extends React.Component {
   );
 }
 
-module.exports = App;
+export default App;

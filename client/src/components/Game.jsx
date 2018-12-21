@@ -1,8 +1,8 @@
-const React = require('react');
-const axios = require('axios');
-const Dealer = require('./Dealer.jsx');
-const Player = require('./Player.jsx');
-const ControlPad = require('./ControlPad.jsx');
+import React from 'react';
+import axios from 'axios';
+import Dealer from './Dealer.jsx';
+import Player from './Player.jsx';
+import ControlPad from './ControlPad.jsx';
 
 class Game extends React.Component {
   constructor(props) {
@@ -168,4 +168,4 @@ class Game extends React.Component {
   );
 }
 
-module.exports = Game;
+export default Game;

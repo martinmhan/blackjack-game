@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 const ControlPad = (props) => (
   <div className="controlpad">
@@ -23,4 +23,4 @@ const ControlPad = (props) => (
   </div>
 );
 
-module.exports = ControlPad;
+export default ControlPad;

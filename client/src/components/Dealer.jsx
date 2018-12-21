@@ -1,5 +1,5 @@
-const React = require('react');
-const Card = require('./Card.jsx');
+import React from 'react';
+import Card from './Card.jsx';
 
 const Dealer = (props) => (
   <div id="dealercomponent">
@@ -10,4 +10,4 @@ const Dealer = (props) => (
   </div>
 );
 
-module.exports = Dealer;
+export default Dealer;

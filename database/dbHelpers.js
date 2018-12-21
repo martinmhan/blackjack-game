@@ -1,10 +1,10 @@
 const User = require('./models/User.js');
 
 module.exports = {
-  findUser: (username) => {
-    return User.findOne({ username });
-  },
-  updateBankroll: (username, bankroll) => {
-    return User.findOneAndUpdate({ username }, { bankroll });
-  }
+  findUser: username => (
+    User.findOne({ username })
+  ),
+  updateBankroll: (username, bankroll) => (
+    User.findOneAndUpdate({ username }, { bankroll })
+  ),
 };

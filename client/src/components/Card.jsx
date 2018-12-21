@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 const Card = (props) => {
   let imgPath = `images/${props.card}.jpg`;
@@ -17,4 +17,4 @@ const Card = (props) => {
   }
 };
 
-module.exports = Card;
+export default Card;
