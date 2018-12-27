@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import LoginForm from './LoginForm.jsx';
 
 class Login extends Component {
   constructor(props) {
@@ -71,25 +72,23 @@ class Login extends Component {
   }
 
   render = () => (
-    <div>
-      <h2>Existing Users</h2>
-      <form id="existinguserform" onSubmit={this.validateExistingUser}>
-        User Name: <input type="text" id="usernameexisting" disabled={this.state.loggedIn}></input>
-        Password: <input type="password" id="passwordexisting" disabled={this.state.loggedIn}></input>
-        <input type="submit" value="Log In" disabled={this.state.loggedIn}></input>
-      </form>
-
-      <h2>New Users</h2>
-      <form id="newuserform" onSubmit={this.validateNewUser}>
-        User Name: <input type="text" id="usernamenew" disabled={this.state.loggedIn}></input>
-        Password: <input type="password" id="passwordnew" disabled={this.state.loggedIn}></input>
-        <input type="submit" value="Log In" disabled={this.state.loggedIn}></input>
-      </form>
-
-      <br></br><br></br>
-      <div id="loginmessage">{this.state.loginmessage}</div>
-      <br></br>
-      <button disabled={!this.state.loggedIn} onClick={this.startGame}>Start Game</button>
+    <div id="loginview">
+      <LoginForm
+        type={"Existing"}
+        onSubmit={this.validateExistingUser}
+        loggedIn={this.state.loggedIn}
+      />
+      <LoginForm
+        type={"New"}
+        onSubmit={this.validateNewUser}
+        loggedIn={this.state.loggedIn}
+      />
+      <div id="startgame">
+        <button id="startgamebtn" disabled={!this.state.loggedIn} onClick={this.startGame}>Start Game</button>
+      </div>
+      <div id="loginmessage">
+        {this.state.loginmessage}
+      </div>
     </div>
   );
 }

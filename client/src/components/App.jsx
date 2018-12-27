@@ -37,9 +37,9 @@ class App extends Component {
   };
 
   render = () => (
-    <div>
-      <h1>Welcome to Blackjack</h1>
-        {this.renderCurrentPage()}
+    <div id="app">
+      <div id="appheader">Welcome to Blackjack</div>
+      {this.renderCurrentPage()}
     </div>
   );
 }
