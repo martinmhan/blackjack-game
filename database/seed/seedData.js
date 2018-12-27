@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const User = require('../models/User.js');
 
 const seedData = [

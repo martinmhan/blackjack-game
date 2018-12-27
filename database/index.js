@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/blackjackdb', { useNewUrlParser: true })
