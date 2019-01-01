@@ -8,7 +8,7 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameStatus: 'inputting bet', // possible values; 'inputting bet', 'bet submitted', 'in play'
+      gameStatus: 'inputting bet', // possible values ---> 'inputting bet', 'bet submitted', 'in play'
       resultText: '',
       dealerCards: [],
       playerCards: [],

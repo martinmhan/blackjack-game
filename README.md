@@ -8,10 +8,6 @@ Run the following in order.
 3. npm start
 
 # TO DO
-Fix position of components when window is resized
-Improve CSS styling, add animations
-Allow player to split hands into two
+Allow player to split hands
 Allow player to double bet
-
-# V2
-Use sockets to allow multiple players to join different tables
+Improve CSS styling, add animations
