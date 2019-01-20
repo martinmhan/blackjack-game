@@ -1,5 +1,5 @@
 # DESCRIPTION
-Basic full stack blackjack game built with MongoDB, Express, React, and Node
+Basic full stack blackjack game built with MongoDB, Express, React, and Node.js
 
 # INSTRUCTIONS
 Run the following in order.
