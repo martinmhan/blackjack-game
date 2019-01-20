@@ -8,4 +8,4 @@ Run the following in order.
 3. npm start
 4. Open 'http://localhost:9001' in Chrome browser
 
-* MongoDB also needs to be installed
+* MongoDB should be installed
