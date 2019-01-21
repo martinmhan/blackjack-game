@@ -27,9 +27,7 @@ class Game extends Component {
   handleBetSubmit = (event) => {
     event.preventDefault();
     let betAmount = parseInt(document.getElementById('betamount').value);
-    if (betAmount <= 0 || betAmount > this.props.currentBankroll) {
-      alert('Please enter a valid bet amount.');
-    } else {
+    if (betAmount > 0 && betAmount <= this.props.currentBankroll) {
       this.setState({
         betAmount,
         gameStatus: 'bet submitted',
@@ -37,6 +35,8 @@ class Game extends Component {
         dealerCards: [],
         playerCards: []
       });
+    } else {
+      alert('Please enter a valid bet amount.');
     }
   };
 
