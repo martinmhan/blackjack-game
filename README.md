@@ -7,7 +7,7 @@ This is one of the first apps that I built when initially learning JavaScript, s
 - New user login: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_login_newuser.gif
 - Existing user login: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_login_existinguser.gif
 - Gameplay: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_gameplay.gif
-- Gameplay (Blackjack): https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_gameplay_blackjack.gif
+- Gameplay (Dealer hits blackjack): https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_gameplay_blackjack.gif
 
 # Instructions to run locally
 Run the following in order.
