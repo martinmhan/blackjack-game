@@ -9,7 +9,7 @@ Please excuse the lack of CSS, as this is one of the first apps that I built whe
 - Gameplay (Dealer hits blackjack): https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_gameplay_blackjack.gif
 
 # Setup
-Run the following then open 'localhost:3000' in a Chrome browser.
+Run the following then open 'localhost:3000' in a Chrome browser (must have MongoDB installed).
 ```
 npm install
 npm run build
