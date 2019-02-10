@@ -7,3 +7,12 @@ Please excuse the lack of CSS, as this is one of the first apps that I built whe
 - Existing user login: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_login_existinguser.gif
 - Gameplay: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_gameplay.gif
 - Gameplay (Dealer hits blackjack): https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_gameplay_blackjack.gif
+
+# Setup
+Run the following then open 'localhost:3000' in a Chrome browser.
+```
+npm install
+npm run build
+mongod
+npm start
+```
