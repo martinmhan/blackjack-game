@@ -1,7 +1,7 @@
 # Description
 Basic full stack blackjack game built with MongoDB, Express, React, and Node.js
 
-Please excuse the lack of CSS, as this is one of the first apps I built when initially learning JavaScript. I mainly wanted practice building a full stack application that stores user data (username, password, bankroll) and executes all the appropriate game logic based on user input. I've included a few GIF demos below.
+Please excuse the lack of CSS, as this is one of the first apps I built when initially learning JavaScript. I mainly wanted practice building a full stack application that stores user data (username, password, bankroll) and executes the appropriate game logic based on user input. I've included a few GIF demos below.
 
 - New user login: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_login_newuser.gif
 - Existing user login: https://s3-us-west-1.amazonaws.com/gitbuckets/blackjack/gifs/blackjack_login_existinguser.gif
